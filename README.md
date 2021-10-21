@@ -1,1 +1,1 @@
-project so_long of 42
+project so_long of 42 school
