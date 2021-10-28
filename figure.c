@@ -9,6 +9,21 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+}				t_vars;
+
+int	key_hook(int keycode, t_vars *vars)
+{
+	if (keycode == 65307)
+	{
+		mlx_destroy_window(vars->mlx, vars->win);
+		exit(EXIT_SUCCES);
+	}
+	return 0;
+}
+
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
@@ -87,7 +102,6 @@ void    ft_triangle(int perimetre, int  coordonne, t_data img)
 /*void    ft_cercle(int rayon, int coordonne, t_data img)
 {
     int cercle;
-
     cercle = 0;
     while (cercle < (2 * 3.1416 * rayon))
     {
@@ -98,21 +112,21 @@ void    ft_triangle(int perimetre, int  coordonne, t_data img)
 
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
+	t_vars	vars;
 	t_data	img;
     int longueur = 300;
     int largeur = 200;
     int rec = 0;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1520, 1080, "So_long");
-	img.img = mlx_new_image(mlx, 1520, 1080);
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, 1520, 1080, "So_long");
+	img.img = mlx_new_image(vars.mlx, 1520, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 	ft_square(1000,longueur, largeur, img);
     ft_triangle(900,  600, img);
     //ft_cercle(600, 900, img);
-    mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+    mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+    mlx_hook(vars.win, 2, 1L<<0, key_hook, &vars);
+	mlx_loop(vars.mlx);
 }
