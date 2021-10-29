@@ -48,6 +48,7 @@ void    check_lengh_line(char **str, int count_line)
     {
         if (ft_strlen(str[count_line]) != lengh_first)
         {
+            free(str);
             printf("les lignes ne font pas tous la meme taille bg\n");
             exit(EXIT_FAILURE);
         }
@@ -98,6 +99,7 @@ void    inside_map(char **str, int count_line)
             if(str[count][i] != 'E' && str[count][i] != 'P' && str[count][i] != 'C' &&
                 str[count][i] != '0' && str[count][i] != '1')
             {
+                free(str);
                 printf("Character invalide dans la map t bete ou quoi\n");
                 exit(EXIT_FAILURE);
             }
@@ -106,11 +108,20 @@ void    inside_map(char **str, int count_line)
         count++;
     }
     if (CheckMap.appears != 1)
+    {
+        free(str);
         error_close_map_appear();
+    }
     if (CheckMap.exit <= 0)
+    {
+        free(str);
         error_close_map_exit();
+    }
     if (CheckMap.collectible <= 0)
+    {
+        free(str);
         error_close_map_collectible();
+    }
 }
 
 void    ft_map_condition(char **str)
@@ -121,6 +132,7 @@ void    ft_map_condition(char **str)
     count_ligne = 0;
     if (*str == NULL)
     {
+        free(str);
         printf("pas de map\n");
         exit(EXIT_FAILURE);
     }
@@ -145,6 +157,7 @@ int parcing(int fd)
         free(line);
 	}
     map_finish = ft_split(map, '|');
+    free(map);
     ft_map_condition(map_finish);
     return (0);
 }
