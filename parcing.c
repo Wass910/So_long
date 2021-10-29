@@ -165,7 +165,19 @@ int parcing(int fd)
 int main(int ac, char **av)
 {
     (void)ac;
+    t_vars  vars;
+    t_data	img;
+
     int fd = open(av[1], O_RDONLY);
     parcing(fd);
-    //printf("%s\n", line);
+    vars.mlx = mlx_init();
+    vars.win = mlx_new_window(vars.mlx, 1520, 1080, "So_long");
+    img.img = mlx_new_image(vars.mlx, 1520, 1080);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
+    mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+    mlx_hook(vars.win, 2, 1L<<0, key_hook, &vars);
+    mlx_hook(vars.win, 2, 1L<<0, key_hook, &vars);
+    mlx_loop(vars.mlx);
+    return 0;
 }

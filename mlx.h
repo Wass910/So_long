@@ -31,8 +31,6 @@
 
 #define	MLX_H
 
-#include <stdio.h>
-#include <stdlib.h>
 
 void	*mlx_init();
 /*
