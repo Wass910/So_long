@@ -95,6 +95,12 @@ void    inside_map(char **str, int count_line)
                 CheckMap.exit++;
             if (str[count][i] == 'C')
                 CheckMap.collectible++;
+            if(str[count][i] != 'E' && str[count][i] != 'P' && str[count][i] != 'C' &&
+                str[count][i] != '0' && str[count][i] != '1')
+            {
+                printf("Character invalide dans la map t bete ou quoi\n");
+                exit(EXIT_FAILURE);
+            }
             i++;
         }
         count++;
@@ -138,9 +144,7 @@ int parcing(int fd)
         map = ft_strcat(map, line);
         free(line);
 	}
-    //printf("map = %s\n", map);
     map_finish = ft_split(map, '|');
-    //printf("map = %s|\n", map_finish[9]);
     ft_map_condition(map_finish);
     return (0);
 }
