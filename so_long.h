@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
@@ -24,25 +24,27 @@
 # include <fcntl.h>
 # include <sys/uio.h>
 
-typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-}				t_vars;
 
-typedef struct	s_data {
-	void	*img;
+
+typedef struct	s_vars{
+	int nb_move;
+	char	**map;
+	void	*img_map;
+	void	*img_perso;
+	void	*img_collect;
+	void	*img_exit;
+	void	*img_floor;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_data;
-
-typedef struct s_CheckMap
-{
+	void	*mlx;
+	void	*win;
 	int	    collectible;
 	int     appears;
     int     exit;
-}	t_CheckMap;
+}				t_vars;
+
 
 int		get_next_line(int fd, char **line);
 char	*ft_strjoin_free(char *s1, char *s2, int f);
@@ -54,11 +56,32 @@ int		ft_strlen(char *s);
 int		ft_count(char *s1, char *s2);
 int		read_line(int fd, char **dest);
 char	*ft_no_leaks(char *dest, int i);
-char		*ft_strcat(char *dest, char *src);
-char			**ft_split(char  *s, char c);
+char	*ft_strcat(char *dest, char *src);
+char	**ft_split(char  *s, char c);
 int		key_hook(int keycode, t_vars *vars);
-
+int		mouse_hook(int button,int x,int y,t_vars *vars);
+void    error_close_map_exit(void);
+void    error_close_map_collectible(void);
+void    error_close_map_appear(void);
+void    error_close_map(void);
+void    aff_map( t_vars vars, int side);
+void    aff_perso( t_vars vars, int side);
+void    aff_collect( t_vars vars, int side);
+void    aff_exit( t_vars vars,  int side);
 void	*mlx_init();
+t_vars    open_window(t_vars vars, int side);
+t_vars  load_image( int side, t_vars vars);
+void    aff_game(t_vars vars, int side);
+void    verif_first_end_wall(char **str, int last_line, int lengh);
+void    check_lengh_line(char **str, int count_line);
+t_vars   wall_map(t_vars vars, int count_ligne);
+t_vars   inside_map(t_vars vars, int count_line);
+t_vars   ft_map_condition(t_vars vars);
+t_vars    parcing(int fd, t_vars vars);
+t_vars  open_game(t_vars vars);
+void    aff_floor(t_vars vars,  int side);
+
+
 /*
 **  needed before everything else.
 **  return (void *)0 if failed
@@ -92,11 +115,11 @@ void	*mlx_new_image(void *mlx_ptr,int width,int height);
 **  obsolete : image2 data is stored using bit planes
 **  void	*mlx_new_image2(void *mlx_ptr,int width,int height);
 */
-char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
+char	*mlx_get_vars_addr(void *img_ptr, int *bits_per_pixel,
 			   int *size_line, int *endian);
 /*
 **  endian : 0 = sever X is little endian, 1 = big endian
-**  for mlx_new_image2, 2nd arg of mlx_get_data_addr is number_of_planes
+**  for mlx_new_image2, 2nd arg of mlx_get_vars_addr is number_of_planes
 */
 int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
 				int x, int y);
