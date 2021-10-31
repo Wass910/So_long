@@ -80,8 +80,12 @@ t_vars   ft_map_condition(t_vars vars);
 t_vars    parcing(int fd, t_vars vars);
 t_vars  open_game(t_vars vars);
 void    aff_floor(t_vars vars,  int side);
-
-
+void	ft_check_access(t_vars vars);
+t_vars	check_character_inside(t_vars vars, int count, int i);
+t_vars	new_map_up(t_vars vars, int count_line, int count_charac);
+t_vars	new_map_right(t_vars vars, int count_line, int count_charac);
+t_vars	new_map_left(t_vars vars, int count_line, int count_charac);
+t_vars	new_map_down(t_vars vars, int count_line, int count_charac);
 /*
 **  needed before everything else.
 **  return (void *)0 if failed

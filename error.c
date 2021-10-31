@@ -1,25 +1,25 @@
 #include "so_long.h"
 
-void    error_close_map_exit(void)
+void	error_close_map_exit(void)
 {
-    printf("Il doit y' avoir au moin une sortie ok bg\n");
-    exit(EXIT_FAILURE);
+	printf("Error, need at least one exit\n");
+	exit(EXIT_FAILURE);
 }
 
-void    error_close_map_collectible(void)
+void	error_close_map_collectible(void)
 {
-    printf("Il doit y' avoir au moin un collectible ok bg\n");
-    exit(EXIT_FAILURE);
+	printf("Error, need at least one coin\n");
+	exit(EXIT_FAILURE);
 }
 
-void    error_close_map_appear(void)
+void	error_close_map_appear(void)
 {
-    printf("Il doit y' avoir uniquement un point d apparition c'est tout ok bg\n");
-    exit(EXIT_FAILURE);
+	printf("Error, need ONE point of appear in the map\n");
+	exit(EXIT_FAILURE);
 }
 
-void    error_close_map(void)
+void	error_close_map(void)
 {
-    printf("Erreur la map n'est pas ferme\n");
-    exit(EXIT_FAILURE);
+	printf("Error, map isn't closed\n");
+	exit(EXIT_FAILURE);
 }
