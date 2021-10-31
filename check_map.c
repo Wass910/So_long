@@ -6,9 +6,9 @@ void	verif_first_end_wall(char **str, int last_line, int lengh)
 	while (lengh >= 0)
 	{
 		if (str[0][lengh] != '1')
-			error_close_map();
+			error_close_map(str);
 		if (str[last_line][lengh] != '1')
-			error_close_map();
+			error_close_map(str);
 		lengh--;
 	}
 }
@@ -22,8 +22,8 @@ void	check_lengh_line(char **str, int count_line)
 	{
 		if (ft_strlen(str[count_line]) != lengh_first)
 		{
-			free(str);
-			printf("les lignes ne font pas tous la meme taille bg\n");
+			free_str(str);
+			printf("Error, the map must be rectangular\n");
 			exit(EXIT_FAILURE);
 		}
 		count_line--;
@@ -44,7 +44,7 @@ t_vars	wall_map(t_vars vars, int count_ligne)
 	while (count < count_ligne)
 	{
 		if (vars.map[count][0] != '1' || vars.map[count][lengh] != '1')
-			error_close_map();
+			error_close_map(vars.map);
 		count++;
 	}
 	return (vars);
@@ -53,20 +53,11 @@ t_vars	wall_map(t_vars vars, int count_ligne)
 void	ft_check_access(t_vars vars)
 {
 	if (vars.appears != 1)
-	{
-		free(vars.map);
-		error_close_map_appear();
-	}
+		error_close_map_appear(vars.map);
 	if (vars.exit <= 0)
-	{
-		free(vars.map);
-		error_close_map_exit();
-	}
+		error_close_map_exit(vars.map);
 	if (vars.collectible <= 0)
-	{
-		free(vars.map);
-		error_close_map_collectible();
-	}
+		error_close_map_collectible(vars.map);
 }
 
 t_vars	check_character_inside(t_vars vars, int count, int i)
@@ -120,7 +111,7 @@ t_vars	ft_map_condition(t_vars vars)
 	if (*vars.map == NULL)
 	{
 		free(vars.map);
-		printf("pas de map\n");
+		printf("Error, no map\n");
 		exit(EXIT_FAILURE);
 	}
 	lengh = ft_strlen(vars.map[0]) - 1;
@@ -128,7 +119,6 @@ t_vars	ft_map_condition(t_vars vars)
 		count_ligne++;
 	vars = wall_map(vars, --count_ligne);
 	vars = inside_map(vars, --count_ligne);
-	printf("la map est valide avec validation \n");
 	return (vars);
 }
 
@@ -144,6 +134,7 @@ t_vars	parcing(int fd, t_vars vars)
 		map = ft_strcat(map, line);
 		free(line);
 	}
+	free(line);
 	vars.map = ft_split(map, '|');
 	free(map);
 	vars = ft_map_condition(vars);

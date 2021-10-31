@@ -44,7 +44,7 @@ t_vars	ft_right( t_vars vars)
 					return (vars);
 				if(vars.map[count_line][count_charac + 1] == 'E' && vars.collectible != 0)
 					return (vars);
-				vars = new_map_right(vars, count_line - 1, count_charac);
+				vars = new_map_right(vars, count_line , count_charac);
 				return(vars);
 			}
 			count_charac++;
@@ -71,7 +71,7 @@ t_vars	ft_left(t_vars vars)
 					return (vars);
 				if(vars.map[count_line][count_charac - 1] == 'E' && vars.collectible != 0)
 					return (vars);
-				vars = new_map_left(vars, count_line - 1, count_charac);
+				vars = new_map_left(vars, count_line, count_charac);
 				return(vars);
 			}
 			count_charac++;
@@ -98,7 +98,7 @@ t_vars	ft_down( t_vars vars)
 					return (vars);
 				if(vars.map[count_line + 1][count_charac] == 'E' && vars.collectible != 0)
 					return (vars);
-				vars = new_map_down(vars, count_line + 1, count_charac);
+				vars = new_map_down(vars, count_line, count_charac);
 				return(vars);
 			}
 			count_charac++;
@@ -111,6 +111,7 @@ int	key_hook(int keycode, t_vars *vars)
 {
 	if (keycode == 65307)
 	{
+		free_str(vars->map);
 		mlx_destroy_window(vars->mlx, vars->win);
 		exit(EXIT_SUCCESS);
 	}
@@ -122,7 +123,9 @@ int	key_hook(int keycode, t_vars *vars)
 		*vars = ft_down( *vars);
 	if (keycode == 100)
 		*vars= ft_right( *vars);
-	printf("nb_move = %d\n", vars->nb_move);
+	if (keycode == 119  || keycode == 97  || 
+	keycode == 100  || keycode == 115)
+		printf("number of move = %d\n", vars->nb_move);
 	return (0);
 }
 

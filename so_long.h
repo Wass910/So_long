@@ -60,10 +60,10 @@ char	*ft_strcat(char *dest, char *src);
 char	**ft_split(char  *s, char c);
 int		key_hook(int keycode, t_vars *vars);
 int		mouse_hook(int button,int x,int y,t_vars *vars);
-void    error_close_map_exit(void);
-void    error_close_map_collectible(void);
-void    error_close_map_appear(void);
-void    error_close_map(void);
+void    error_close_map_exit(char **str);
+void    error_close_map_collectible(char **str);
+void    error_close_map_appear(char **str);
+void    error_close_map(char **str);
 void    aff_map( t_vars vars, int side);
 void    aff_perso( t_vars vars, int side);
 void    aff_collect( t_vars vars, int side);
@@ -86,6 +86,8 @@ t_vars	new_map_up(t_vars vars, int count_line, int count_charac);
 t_vars	new_map_right(t_vars vars, int count_line, int count_charac);
 t_vars	new_map_left(t_vars vars, int count_line, int count_charac);
 t_vars	new_map_down(t_vars vars, int count_line, int count_charac);
+void	free_str(char **str);
+
 /*
 **  needed before everything else.
 **  return (void *)0 if failed

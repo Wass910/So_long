@@ -41,6 +41,7 @@ char	*ft_strcat(char *dest, char *src)
 		i++;
 		++j;
 	}
+	free(dest);
 	tmp[i++] = '\0';
 	return (tmp);
 }
