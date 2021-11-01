@@ -1,9 +1,9 @@
 #include "so_long.h"
 
-int		ft_count_str(char *s1, char *s2)
+int	ft_count_str(char *s1, char *s2)
 {
-	int i;
-	int e;
+	int	i;
+	int	e;
 
 	i = 0;
 	e = 0;
@@ -24,7 +24,8 @@ char	*ft_strcat(char *dest, char *src)
 	unsigned int	j;
 	char			*tmp;
 
-	if (!(tmp = malloc(sizeof(char) * (ft_count_str(dest, src) + 2))))
+	tmp = malloc(sizeof(char) * (ft_count_str(dest, src) + 2));
+	if (!tmp)
 		return (0);
 	i = 0;
 	while (dest[i] != '\0')

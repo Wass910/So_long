@@ -34,6 +34,7 @@ typedef struct	s_vars{
 	void	*img_collect;
 	void	*img_exit;
 	void	*img_floor;
+	void	*img_ennemy;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
@@ -70,7 +71,7 @@ void    aff_collect( t_vars vars, int side);
 void    aff_exit( t_vars vars,  int side);
 void	*mlx_init();
 t_vars    open_window(t_vars vars, int side);
-t_vars  load_image( int side, t_vars vars);
+t_vars  load_image( int s, t_vars vars);
 void    aff_game(t_vars vars, int side);
 void    verif_first_end_wall(char **str, int last_line, int lengh);
 void    check_lengh_line(char **str, int count_line);
@@ -87,7 +88,7 @@ t_vars	new_map_right(t_vars vars, int count_line, int count_charac);
 t_vars	new_map_left(t_vars vars, int count_line, int count_charac);
 t_vars	new_map_down(t_vars vars, int count_line, int count_charac);
 void	free_str(char **str);
-
+void    free_map(t_vars vars);
 /*
 **  needed before everything else.
 **  return (void *)0 if failed

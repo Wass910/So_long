@@ -2,10 +2,10 @@
 
 void	free_str(char **str)
 {
-	int line;
+	int	line;
 
 	line = 0;
-	while(str[line])
+	while (str[line])
 	{
 		free(str[line]);
 		line++;

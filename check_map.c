@@ -1,6 +1,5 @@
 #include "so_long.h"
 
-
 void	verif_first_end_wall(char **str, int last_line, int lengh)
 {
 	while (lengh >= 0)
@@ -68,16 +67,16 @@ t_vars	check_character_inside(t_vars vars, int count, int i)
 		vars.exit++;
 	if (vars.map[count][i] == 'C')
 		vars.collectible++;
-	if(vars.map[count][i] != 'E' && vars.map[count][i] != 'P' && vars.map[count][i] != 'C' &&
-		vars.map[count][i] != '0' && vars.map[count][i] != '1')
+	if (vars.map[count][i] != 'E' && vars.map[count][i] != 'P'
+		&& vars.map[count][i] != 'C' && vars.map[count][i] != '0'
+		&& vars.map[count][i] != '1' && vars.map[count][i] != 'G')
 	{
-		free(vars.map);
+		free_str(vars.map);
 		printf("Error, not valide character\n");
 		exit(EXIT_FAILURE);
 	}
 	return (vars);
 }
-
 
 t_vars	inside_map(t_vars vars, int count_line)
 {
@@ -134,9 +133,16 @@ t_vars	parcing(int fd, t_vars vars)
 		map = ft_strcat(map, line);
 		free(line);
 	}
+	map = ft_strcat(map, line);
 	free(line);
 	vars.map = ft_split(map, '|');
 	free(map);
 	vars = ft_map_condition(vars);
+	if (ft_strlen(vars.map[0]) > 40)
+	{	
+		free_str(vars.map);
+		printf("Valid map but to big for your screen, sorry\n");
+		exit(EXIT_SUCCESS);
+	}
 	return (vars);
 }
