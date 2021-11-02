@@ -11,22 +11,28 @@ t_vars	open_game(t_vars vars)
 	return (vars);
 }
 
-void	ft_verif_arg(int argc, char **argv)
+void	ft_verif_arg(int argc, char **argv, int fd)
 {
-	if (argc != 2)
-		exit(EXIT_FAILURE);
-	if (!argv[1][0] && !argv[1][1] && !argv[1][2] &&
-		!argv[1][3] && !argv[1][4] && !argv[1][5] &&
-		!argv[1][6])
+	int	i;
+
+	if (fd == -1)
 	{
+		printf("Error, the map doesn't exist. Please enter a valid file\n");
 		exit(EXIT_FAILURE);
 	}
-	if (ft_strlen(argv[1]) != 7)
+	if (argc != 2)
 		exit(EXIT_FAILURE);
-	if (argv[1][0] != 'm' && argv[1][1] != 'a' && argv[1][2] != 'p' &&
-		argv[1][3] != '.' && argv[1][4] != 'b' && argv[1][5] != 'e' &&
-		argv[1][6] != 'r')
+	i = ft_strlen(argv[1]);
+	if (i < 4)
 	{
+		printf("Error, the map doesn't exist. Please enter a valid file\n");
+		exit(EXIT_FAILURE);
+	}
+	i--;
+	if (argv[1][i] != 'r' && argv[1][i - 1] != 'e' && argv[1][i - 2] != 'b' &&
+		argv[1][i - 3] != '.')
+	{
+		printf("Error, the map have to finish in .ber.\n");
 		exit(EXIT_FAILURE);
 	}
 	return ;
@@ -37,9 +43,9 @@ int	main(int ac, char **av)
 	t_vars	vars;
 	int		fd;
 
-	ft_verif_arg(ac, av);
 	fd = open(av[1], O_RDONLY);
-	vars = parcing(fd, vars);
+	ft_verif_arg(ac, av, fd);
+	vars = parcing(fd);
 	vars = open_game(vars);
 	mlx_key_hook(vars.win, key_hook, &vars);
 	mlx_hook(vars.win, 17, 1L << 17, mouse_hook, &vars);

@@ -132,12 +132,3 @@ int	key_hook(int keycode, t_vars *vars)
 		printf("number of move = %d\n", vars->nb_move);
 	return (0);
 }
-
-int	mouse_hook(int button, int x, int y, t_vars *vars)
-{
-	(void)button;
-	(void)x;
-	(void)y;
-	exit(EXIT_SUCCESS);
-	return (0);
-}
